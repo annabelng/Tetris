@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+// Class driver 
 public class driver extends JPanel implements KeyListener, ActionListener {
 
 	int screen_width = 600;
