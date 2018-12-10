@@ -1,26 +1,24 @@
-import java.awt.Color;
-import java.awt.Graphics;
 import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class squareBlock {
+public class tBlock {
 	private int x;
 	private int y;
 	private int vy, vx;
 	private int w, h;
 	private JLabel img;
 
-	public squareBlock(String filename) {
+	public tBlock(String filename) {
 		String src = new File("").getAbsolutePath() + "/src/";
-		ImageIcon squareIcon = new ImageIcon(src + filename);
+		ImageIcon rectangleIcon = new ImageIcon(src + filename);
 		// connect the file to the img
-		img = new JLabel(squareIcon);
-		w = 100;
+		img = new JLabel(rectangleIcon);
+		w = 150;
 		h = 100;
-		x = 0;
-		y = 0;
+		x = 50;
+		y = 50;
 		img.setBounds(x, y, w, h);
 	}
 	
