@@ -20,8 +20,9 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 	int screen_height = 1000;
 	squareBlock square = new squareBlock("square.png");
 	rectangle Rectangle = new rectangle("LongRectangle.png");
-	background bg = new background();
 	tBlock TBlock = new tBlock("tBlock.png");
+	sBlock SBlock = new sBlock("sBlock.png");
+	lBlock LBlock = new lBlock("LBlock.png");
 	
 	JLabel squareBlock;
 
@@ -55,6 +56,8 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 		f.add(square.getImg());
 		f.add(Rectangle.getImg());
 		f.add(TBlock.getImg());
+		f.add(SBlock.getImg());
+		f.add(LBlock.getImg());
 		
 		f.setResizable(false);
 		f.setLayout(null);
