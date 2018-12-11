@@ -17,20 +17,47 @@ public class tBlock {
 		img = new JLabel(rectangleIcon);
 		w = 150;
 		h = 100;
-		x = 50;
-		y = 50;
+		x = 100;
+		y = -100;
+		vy = 3;
 		img.setBounds(x, y, w, h);
 	}
 	
-	public int getX(){
-		return x; //getter for objects x field
+	public int getX() {
+		return x; // getter for objects x field
 	}
+
 	public void setX(int newX) {
 		x = newX; // update object
 		// object object's image
 		img.setBounds(x, y, w, h);
 	}
-	public JLabel getImg(){
-		return img; //getter for object's img
+
+	public int getY() {
+		return y; // getter for objects x field
+	}
+
+	public void setY(int newY) {
+		y = newY; // update object
+		// object object's image
+		img.setBounds(x, y, w, h);
+	}
+
+	public int getW() {
+		return w;
+	}
+
+	public int getH() {
+		return h;
+	}
+
+	public void move(){
+		y += vy;
+		img.setBounds(x,y,w,h);
+		if(y > 870)
+			y = 870;
+	}
+	public JLabel getImg() {
+		return img; // getter for object's img
 	}
 }

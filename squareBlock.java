@@ -20,7 +20,7 @@ public class squareBlock {
 		w = 100;
 		h = 100;
 		x = 0;
-		y = 0;
+		y = -100;
 		vy = 3;
 		img.setBounds(x, y, w, h);
 	}

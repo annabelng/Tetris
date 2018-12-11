@@ -23,24 +23,30 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 	tBlock TBlock = new tBlock("tBlock.png");
 	sBlock SBlock = new sBlock("sBlock.png");
 	lBlock LBlock = new lBlock("LBlock.png");
-	
+
 	JLabel squareBlock;
 
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		
-	//	square.paint(g);
+
+		// square.paint(g);
 	}
-	
+
 	public void update() {
-		
+		square.move();
+		TBlock.move();
+		SBlock.move();
+		LBlock.move();
+		Rectangle.move();
+
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		update();
 		repaint();
 	}
-	
+
 	public static void main(String[] arg) {
 		Driver d = new Driver();
 	}
@@ -51,14 +57,15 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 		f.setSize(screen_width, screen_height);
 		f.getContentPane().setBackground(new Color(0, 0, 0));
 
-		String src = new File("").getAbsolutePath()+"/src/"; //path to image setup
-		
+		String src = new File("").getAbsolutePath() + "/src/"; // path to image
+																// setup
+
 		f.add(square.getImg());
 		f.add(Rectangle.getImg());
 		f.add(TBlock.getImg());
 		f.add(SBlock.getImg());
 		f.add(LBlock.getImg());
-		
+
 		f.setResizable(false);
 		f.setLayout(null);
 		f.addKeyListener(this);
