@@ -18,11 +18,11 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 
 	int screen_width = 500;
 	int screen_height = 1000;
-	squareBlock square = new squareBlock("square.png");
-	rectangle Rectangle = new rectangle("LongRectangle.png");
-	tBlock TBlock = new tBlock("tBlock.png");
-	sBlock SBlock = new sBlock("sBlock.png");
-	lBlock LBlock = new lBlock("LBlock.png");
+	squareBlock[] square = new squareBlock[5];
+	rectangle[] Rectangle = new rectangle[5];
+	tBlock[] TBlock = new tBlock[5];
+	sBlock[] SBlock = new sBlock[5];
+	lBlock[] LBlock = new lBlock[5];
 
 	JLabel squareBlock;
 
@@ -32,22 +32,27 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 		// square.paint(g);
 	}
 
-	public void moveCycle(){
-		square.move();
-		if (square.getIsMoving() == false) {
-			TBlock.move();
-		}
-		if (TBlock.getIsMoving() == false) {
-			SBlock.move();
-		}
-		if (SBlock.getIsMoving() == false) {
-			LBlock.move();
-		}
-		if (LBlock.getIsMoving() == false) {
-			Rectangle.move();
+	public void moveCycle() {
+		for (int i = 0; i < square.length; i++) {
+			square[i].setY(-100);
+			square[i].move();
+			/*if (square[i].getIsMoving() == false) {
+				TBlock[i].move();
+			}
+			if (TBlock[i].getIsMoving() == false) {
+				SBlock[i].move();
+			}
+			if (SBlock[i].getIsMoving() == false) {
+				LBlock[i].move();
+			}
+			if (LBlock[i].getIsMoving() == false) {
+				Rectangle[i].move();
+			}*/
 		}
 	}
+
 	public void update() {
+		
 		moveCycle();
 	}
 
@@ -70,16 +75,31 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 		String src = new File("").getAbsolutePath() + "/src/"; // path to image
 																// setup
 
-		f.add(square.getImg());
-		f.add(Rectangle.getImg());
-		f.add(TBlock.getImg());
-		f.add(SBlock.getImg());
-		f.add(LBlock.getImg());
-
 		f.setResizable(false);
 		f.setLayout(null);
 		f.addKeyListener(this);
 		f.add(this);
+
+		for (int i = 0; i < square.length; i++) {
+			square[i] = new squareBlock("square.png");
+			f.add(square[i].getImg());
+		}
+		for (int i = 0; i < Rectangle.length; i++) {
+			Rectangle[i] = new rectangle("LongRectangle.png");
+			f.add(Rectangle[i].getImg());
+		}
+		for (int i = 0; i < TBlock.length; i++) {
+			TBlock[i] = new tBlock("TBlock.png");
+			f.add(TBlock[i].getImg());
+		}
+		for (int i = 0; i < SBlock.length; i++) {
+			SBlock[i] = new sBlock("SBlock.png");
+			f.add(SBlock[i].getImg());
+		}
+		for (int i = 0; i < LBlock.length; i++) {
+			LBlock[i] = new lBlock("LBlock.png");
+			f.add(LBlock[i].getImg());
+		}
 
 		// end creating objects
 		t = new Timer(17, this);
