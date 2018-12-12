@@ -9,6 +9,7 @@ public class sBlock {
 	private int vy, vx;
 	private int w, h;
 	private JLabel img;
+	private boolean isMoving;
 
 	public sBlock(String filename) {
 		String src = new File("").getAbsolutePath() + "/src/";
@@ -21,6 +22,7 @@ public class sBlock {
 		y = -100;
 		vy = 3;
 		img.setBounds(x, y, w, h);
+		isMoving = true;
 	}
 	
 	public int getX() {
@@ -52,12 +54,18 @@ public class sBlock {
 	}
 
 	public void move(){
+		isMoving = true;
 		y += vy;
 		img.setBounds(x,y,w,h);
-		if(y > 870)
+		if(y > 870){
 			y = 870;
+			isMoving = false;
+		}
 	}
 	public JLabel getImg() {
 		return img; // getter for object's img
+	}
+	public boolean getIsMoving(){
+		return isMoving;
 	}
 }
