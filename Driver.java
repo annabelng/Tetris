@@ -32,13 +32,23 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 		// square.paint(g);
 	}
 
-	public void update() {
+	public void moveCycle(){
 		square.move();
-		TBlock.move();
-		SBlock.move();
-		LBlock.move();
-		Rectangle.move();
-
+		if (square.getIsMoving() == false) {
+			TBlock.move();
+		}
+		if (TBlock.getIsMoving() == false) {
+			SBlock.move();
+		}
+		if (SBlock.getIsMoving() == false) {
+			LBlock.move();
+		}
+		if (LBlock.getIsMoving() == false) {
+			Rectangle.move();
+		}
+	}
+	public void update() {
+		moveCycle();
 	}
 
 	@Override

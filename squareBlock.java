@@ -11,6 +11,7 @@ public class squareBlock {
 	private int vy, vx;
 	private int w, h;
 	private JLabel img;
+	private boolean isMoving;
 
 	public squareBlock(String filename) {
 		String src = new File("").getAbsolutePath() + "/src/";
@@ -23,6 +24,7 @@ public class squareBlock {
 		y = -100;
 		vy = 3;
 		img.setBounds(x, y, w, h);
+		isMoving = true;
 	}
 
 	public int getX() {
@@ -54,12 +56,20 @@ public class squareBlock {
 	}
 
 	public void move(){
+		isMoving = true;
 		y += vy;
 		img.setBounds(x,y,w,h);
-		if(y > 870)
+		if(y > 870){
 			y = 870;
+			isMoving = false;
+		}
 	}
 	public JLabel getImg() {
 		return img; // getter for object's img
 	}
+	public boolean getIsMoving(){
+		return isMoving;
+	}
+	
+	
 }
