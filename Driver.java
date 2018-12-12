@@ -1,6 +1,7 @@
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -49,6 +50,28 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 	}
 	public void update() {
 		moveCycle();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
+		for (int i = 0; i < squareBlock.length; i++) {
+			squareBlock[i].move();
+			lBLock obj = new lBlock(squareBlock[i].getX(), squareBlock[i].getY(), 100, 100);
+			if (squareBlock.intersects(lBlock || rectangle || sBlock || tBlock)) {
+				squareBlock.setX(getX);
+				squareBlock.setY(getY);
+			*/	
+				
+				
+					
+		
 	}
 
 	@Override
