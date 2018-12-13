@@ -20,7 +20,7 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 	int screen_width = 500;
 	int screen_height = 1000;
 	squareBlock square = new squareBlock("square.png");
-	rectangle Rectangle = new rectangle("LongRectangle.png");
+	rectangle Rectangle2 = new rectangle("LongRectangle.png");
 	tBlock TBlock = new tBlock("tBlock.png");
 	sBlock SBlock = new sBlock("sBlock.png");
 	lBlock LBlock = new lBlock("LBlock.png");
@@ -36,16 +36,16 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 	public void moveCycle(){
 		square.move();
 		if (square.getIsMoving() == false) {
-			TBlock.move();
+			Rectangle2.move();
 		}
-		if (TBlock.getIsMoving() == false) {
+		if (Rectangle2.getIsMoving() == false) {
 			SBlock.move();
 		}
 		if (SBlock.getIsMoving() == false) {
 			LBlock.move();
 		}
 		if (LBlock.getIsMoving() == false) {
-			Rectangle.move();
+			TBlock.move();
 		}
 	}
 	public void update() {
@@ -53,21 +53,21 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 		
 		
 		
+	
 		
 		
 		
 		
 		
-		
-		
-		/*
-		for (int i = 0; i < squareBlock.length; i++) {
-			squareBlock[i].move();
-			lBLock obj = new lBlock(squareBlock[i].getX(), squareBlock[i].getY(), 100, 100);
-			if (squareBlock.intersects(lBlock || rectangle || sBlock || tBlock)) {
-				squareBlock.setX(getX);
-				squareBlock.setY(getY);
-			*/	
+			Rectangle character = new Rectangle(square.getX(), square.getY(), 100, 100);
+			//square.move();
+			Rectangle obj = new Rectangle(Rectangle2.getX(), Rectangle2.getY(), 200, 50);
+			if (obj.intersects(character)) {
+				Rectangle2.setVy(0);
+				Rectangle2.setX(square.getX());
+				Rectangle2.setY(square.getY()-40);
+				
+			}
 				
 				
 					
@@ -94,7 +94,7 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 																// setup
 
 		f.add(square.getImg());
-		f.add(Rectangle.getImg());
+		f.add(Rectangle2.getImg());
 		f.add(TBlock.getImg());
 		f.add(SBlock.getImg());
 		f.add(LBlock.getImg());
