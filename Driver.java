@@ -19,11 +19,11 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 
 	int screen_width = 500;
 	int screen_height = 1000;
-	squareBlock[] square = new squareBlock[5];
-	rectangle[] Rectangle2 = new rectangle[5];
-	tBlock[] TBlock = new tBlock[5];
-	sBlock[] SBlock = new sBlock[5];
-	lBlock[] LBlock = new lBlock[5];
+	squareBlock square = new squareBlock("square.png");
+	rectangle Rectangle2 = new rectangle("LongRectangle.png");
+	tBlock TBlock = new tBlock("tBlock.png");
+	sBlock SBlock = new sBlock("sBlock.png");
+	lBlock LBlock = new lBlock("LBlock.png");
 
 	JLabel squareBlock;
 
@@ -33,38 +33,51 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 		// square.paint(g);
 	}
 
-	public void moveCycle() {
-		for (int i = 0; i < square.length; i++) {
-			square[i].move();
-			if (square[i].getIsMoving() == false) {
-				TBlock[i].move();
-			}
-			if (TBlock[i].getIsMoving() == false) {
-				SBlock[i].move();
-			}
-			if (SBlock[i].getIsMoving() == false) {
-				LBlock[i].move();
-			}
-			if (LBlock[i].getIsMoving() == false) {
-				Rectangle2[i].move();
-			}
-		}
-	}
+	public void moveCycle(){
+		Rectangle square3 = new Rectangle(square.getX(), square.getY(), 100, 100);
+		Rectangle rectangle = new Rectangle(Rectangle2.getX(), Rectangle2.getY(), 200, 50);
+		Rectangle tBlock2 = new Rectangle(TBlock.getX(), TBlock.getY(), 150, 100);
+		Rectangle sBlock2 = new Rectangle(SBlock.getX(), SBlock.getY(), 150, 100);
+		Rectangle lBLock2 = new Rectangle(LBlock.getX(), LBlock.getY(), 150, 100);
 
+		square.move();
+		if (square.getIsMoving() == false) {
+			Rectangle2.move();
+			
+			if (rectangle.intersects(square3)) {
+				Rectangle2.setVy(0);
+				Rectangle2.setX(square.getX());
+				Rectangle2.setY(square.getY()-40);
+				Rectangle2.setIsMoving(false);
+			}
+			square = new squareBlock("square.png");
+			f.add(square.getImg());
+		}
+		if (Rectangle2.getIsMoving() == false) {
+			SBlock.move();
+			
+			if (sBlock2.intersects(rectangle)) {
+				SBlock.setVy(0);
+				SBlock.setX(Rectangle2.getX());
+				SBlock.setY(Rectangle2.getY()-100);
+				SBlock.setIsMoving(false);
+			}
+		}
+		if (SBlock.getIsMoving() == false) {
+			LBlock.move();
+		}
+		if (LBlock.getIsMoving() == false) {
+			TBlock.move();
+		}
+		
+		
+	}
 	public void update() {
-		
 		moveCycle();
+				
+				
+					
 		
-		for(int i = 0; i < square.length; i++){
-		Rectangle character = new Rectangle(square[i].getX(), square[i].getY(), 100, 100);
-		//square.move();
-		Rectangle obj = new Rectangle(Rectangle2[i].getX(), Rectangle2[i].getY(), 200, 50);
-		if (obj.intersects(character)) {
-			Rectangle2[i].setVy(0);
-			Rectangle2[i].setX(square[i].getX());
-			Rectangle2[i].setY(square[i].getY()-40);
-		}
-		}
 	}
 
 	@Override
@@ -76,9 +89,8 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 	public static void main(String[] arg) {
 		Driver d = new Driver();
 	}
-
+		JFrame f = new JFrame();;
 	public Driver() {
-		JFrame f = new JFrame();
 		f.setTitle("TETRIS");
 		f.setSize(screen_width, screen_height);
 		f.getContentPane().setBackground(new Color(0, 0, 0));
@@ -86,36 +98,16 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 		String src = new File("").getAbsolutePath() + "/src/"; // path to image
 																// setup
 
+		f.add(square.getImg());
+		f.add(Rectangle2.getImg());
+		f.add(TBlock.getImg());
+		f.add(SBlock.getImg());
+		f.add(LBlock.getImg());
+
 		f.setResizable(false);
 		f.setLayout(null);
 		f.addKeyListener(this);
 		f.add(this);
-
-		for (int i = 0, y = -100; i < square.length; i++, y-=5000) {
-			square[i] = new squareBlock("square.png");
-			square[i].setY(y);
-			f.add(square[i].getImg());
-		}
-		for (int i = 0,  y = -100; i < Rectangle2.length; i++, y -= 500) {
-			Rectangle2[i] = new rectangle("LongRectangle2.png");
-			Rectangle2[i].setY(y);
-			f.add(Rectangle2[i].getImg());
-		}
-		for (int i = 0, y = -100; i < TBlock.length; i++, y -= 500) {
-			TBlock[i] = new tBlock("TBlock.png");
-			TBlock[i].setY(y);
-			f.add(TBlock[i].getImg());
-		}
-		for (int i = 0, y = -100; i < SBlock.length; i++, y -= 500) {
-			SBlock[i] = new sBlock("SBlock.png");
-			SBlock[i].setY(y);
-			f.add(SBlock[i].getImg());
-		}
-		for (int i = 0, y = -100; i < LBlock.length; i++, y -= 500) {
-			LBlock[i] = new lBlock("LBlock.png");
-			LBlock[i].setY(y);
-			f.add(LBlock[i].getImg());
-		}
 
 		// end creating objects
 		t = new Timer(17, this);
@@ -129,7 +121,11 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		squareBlock square2 = new squareBlock("square.png");
+		square2.setY(300);
+		square2.setX(300);
+		f.add(square2.getImg());
+		System.out.println("spawn");
 	}
 
 	@Override

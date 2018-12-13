@@ -18,9 +18,9 @@ public class sBlock {
 		img = new JLabel(rectangleIcon);
 		w = 150;
 		h = 100;
-		x = 150;
+		x = 0;
 		y = -100;
-		vy = 3;
+		vy = 10;
 		img.setBounds(x, y, w, h);
 		isMoving = true;
 	}
@@ -67,5 +67,15 @@ public class sBlock {
 	}
 	public boolean getIsMoving(){
 		return isMoving;
+	}
+	public int getVy() {
+		return vy;
+	}
+	public void setVy(int newVY) {
+		vy = newVY;
+		
+	}
+	public void setIsMoving(boolean newMoving) {
+		isMoving = newMoving;
 	}
 }

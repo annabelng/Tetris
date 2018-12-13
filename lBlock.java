@@ -20,7 +20,7 @@ public class lBlock {
 		h = 100;
 		x = 300;
 		y = -100;
-		vy = 3;
+		vy = 10;
 		img.setBounds(x, y, w, h);
 		isMoving = true;
 	}
@@ -67,5 +67,16 @@ public class lBlock {
 	}
 	public boolean getIsMoving(){
 		return isMoving;
+	}
+	public int getVy() {
+		return vy;
+	}
+	public void setVy(int newVY) {
+		vy = newVY;
+		
+	}
+
+	public void setIsMoving(boolean newMoving) {
+		isMoving = newMoving;
 	}
 }
