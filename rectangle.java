@@ -18,9 +18,9 @@ public class rectangle {
 		img = new JLabel(rectangleIcon);
 		w = 200;
 		h = 100;
-		x = 100;
-		y = -100;
-		vy = 3;
+		x = 0;
+		y = -500;
+		vy = 10;
 		img.setBounds(x, y, w, h);
 		isMoving = true;
 	}
@@ -51,6 +51,13 @@ public class rectangle {
 
 	public int getH() {
 		return h;
+	}
+	public int getVy() {
+		return vy;
+	}
+	public void setVy(int newVY) {
+		vy = newVY;
+		
 	}
 
 	public void move(){
