@@ -33,51 +33,129 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 		// square.paint(g);
 	}
 
-	public void moveCycle(){
-		Rectangle square3 = new Rectangle(square.getX(), square.getY(), 100, 100);
-		Rectangle rectangle = new Rectangle(Rectangle2.getX(), Rectangle2.getY(), 200, 50);
-		Rectangle tBlock2 = new Rectangle(TBlock.getX(), TBlock.getY(), 150, 100);
-		Rectangle sBlock2 = new Rectangle(SBlock.getX(), SBlock.getY(), 150, 100);
-		Rectangle lBLock2 = new Rectangle(LBlock.getX(), LBlock.getY(), 150, 100);
+	public void collision() {
+		Rectangle square3 = new Rectangle(square.getX(), square.getY(), 100,
+				100);
+		Rectangle rectangle = new Rectangle(Rectangle2.getX(),
+				Rectangle2.getY(), 200, 50);
+		Rectangle tBlock2 = new Rectangle(TBlock.getX(), TBlock.getY(), 150,
+				100);
+		Rectangle sBlock2 = new Rectangle(SBlock.getX(), SBlock.getY(), 150,
+				100);
+		Rectangle lBLock2 = new Rectangle(LBlock.getX(), LBlock.getY(), 150,
+				100);
 
+		if (rectangle.intersects(square3)) {
+			Rectangle2.setVy(0);
+			Rectangle2.setX(Rectangle2.getX());
+			Rectangle2.setY(Rectangle2.getY());
+			Rectangle2.setIsMoving(false);
+		}
+		if (sBlock2.intersects(rectangle)) {
+			// SBlock.setIsMoving(false);
+			SBlock.setVy(0);
+			SBlock.setX(SBlock.getX());
+			SBlock.setY(SBlock.getY() - 20);
+			SBlock.setIsMoving(false);
+		}
+		if (lBLock2.intersects(sBlock2)) {
+			// SBlock.setIsMoving(false);
+			LBlock.setVy(0);
+			LBlock.setX(LBlock.getX());
+			LBlock.setY(LBlock.getY() - 20);
+			LBlock.setIsMoving(false);
+		}
+		if (tBlock2.intersects(sBlock2)) {
+			// SBlock.setIsMoving(false);
+			TBlock.setVy(0);
+			TBlock.setX(TBlock.getX());
+			TBlock.setY(TBlock.getY() - 20);
+			TBlock.setIsMoving(false);
+		}
+	}
+
+	public void reset() {
+		
+			square = new squareBlock("square.png");
+			Rectangle2 = new rectangle("LongRectangle.png");
+			TBlock = new tBlock("tBlock.png");
+			SBlock = new sBlock("sBlock.png");
+			LBlock = new lBlock("LBlock.png");
+			f.add(square.getImg());
+			f.add(Rectangle2.getImg());
+			f.add(TBlock.getImg());
+			f.add(SBlock.getImg());
+			f.add(LBlock.getImg());
+			square.move();
+		
+	}
+
+	public void moveCycle() {
+		Rectangle square3 = new Rectangle(square.getX(), square.getY() - 20,
+				100, 120);
+		Rectangle rectangle = new Rectangle(Rectangle2.getX(),
+				Rectangle2.getY() - 20, 200, 60);
+		Rectangle tBlock2 = new Rectangle(TBlock.getX(), TBlock.getY() - 20,
+				150, 120);
+		Rectangle sBlock2 = new Rectangle(SBlock.getX(), SBlock.getY() - 20,
+				150, 120);
+		Rectangle lBLock2 = new Rectangle(LBlock.getX(), LBlock.getY() - 20,
+				150, 120);
+
+		// ||rectangle.intersects(tBlock2)||rectangle.intersects(sBlock2)||rectangle.intersects(lBLock2)
+		// ||sBlock2.intersects(square3)||sBlock2.intersects(tBlock2)||sBlock2.intersects(lBLock2)
 		square.move();
 		if (square.getIsMoving() == false) {
 			Rectangle2.move();
-			
+
 			if (rectangle.intersects(square3)) {
 				Rectangle2.setVy(0);
-				Rectangle2.setX(square.getX());
-				Rectangle2.setY(square.getY()-40);
+				Rectangle2.setX(Rectangle2.getX());
+				Rectangle2.setY(Rectangle2.getY());
 				Rectangle2.setIsMoving(false);
 			}
-			square = new squareBlock("square.png");
-			f.add(square.getImg());
+
 		}
 		if (Rectangle2.getIsMoving() == false) {
 			SBlock.move();
-			
+
+			// SBlock.setIsMoving(false);
+
 			if (sBlock2.intersects(rectangle)) {
+				// SBlock.setIsMoving(false);
 				SBlock.setVy(0);
-				SBlock.setX(Rectangle2.getX());
-				SBlock.setY(Rectangle2.getY()-100);
+				SBlock.setX(SBlock.getX());
+				SBlock.setY(SBlock.getY());
 				SBlock.setIsMoving(false);
 			}
 		}
 		if (SBlock.getIsMoving() == false) {
 			LBlock.move();
-		}
-		if (LBlock.getIsMoving() == false) {
-			TBlock.move();
-		}
-		
-		
+
+			if (lBLock2.intersects(sBlock2)) {
+				// SBlock.setIsMoving(false);
+				LBlock.setVy(0);
+				LBlock.setX(LBlock.getX());
+				LBlock.setY(LBlock.getY());
+			}
+			}
+			if (LBlock.getIsMoving() == false) {
+				TBlock.move();
+				if (tBlock2.intersects(sBlock2)) {
+					// SBlock.setIsMoving(false);
+					TBlock.setVy(0);
+					TBlock.setX(TBlock.getX());
+					TBlock.setY(TBlock.getY());
+				}
+			}
+		reset();
+
 	}
+
 	public void update() {
 		moveCycle();
-				
-				
-					
-		
+		//reset();
+		//moveCycle();
 	}
 
 	@Override
@@ -89,7 +167,9 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 	public static void main(String[] arg) {
 		Driver d = new Driver();
 	}
-		JFrame f = new JFrame();;
+
+	JFrame f = new JFrame();;
+
 	public Driver() {
 		f.setTitle("TETRIS");
 		f.setSize(screen_width, screen_height);
