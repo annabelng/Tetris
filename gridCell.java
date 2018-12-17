@@ -6,6 +6,8 @@ public class gridCell {
 	private int size;
 	private Color c;
 
+	Block blocks = new Block(0);
+
 	public gridCell() {
 		x = 0;
 		y = 0;
@@ -43,13 +45,21 @@ public class gridCell {
 	}
 
 	public Color getC() {
-		return c;
+		return blocks.getC();
+	}
+
+	public void paintBlock(Graphics g) {
+		// TODO Auto-generated method stub
+		g.setColor(c);
+		g.fillRect(blocks.getX(), blocks.getY(), size, size);
+		g.fillRect(blocks.getX()+10, blocks.getY(), size, size);
+		g.fillRect(blocks.getX(), blocks.getY()+10, size, size);
+		g.fillRect(blocks.getX()+10, blocks.getY()+10, size, size);
 	}
 
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
-		g.setColor(c);
+		g.setColor(Color.BLACK);
 		g.fillRect(x, y, size, size);
 	}
-
 }
