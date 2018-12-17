@@ -1,6 +1,7 @@
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,43 +13,53 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.util.concurrent.TimeUnit;
 
 // Class driver 
-public class Driver extends JPanel implements KeyListener, ActionListener {
+public class Driver extends Applet implements ActionListener, KeyListener {
 
-	int screen_width = 500;
-	int screen_height = 1000;
-	squareBlock square = new squareBlock("square.png");
-	rectangle Rectangle = new rectangle("LongRectangle.png");
-	tBlock TBlock = new tBlock("tBlock.png");
-	sBlock SBlock = new sBlock("sBlock.png");
-	lBlock LBlock = new lBlock("LBlock.png");
+	int screen_width = 50;
+	int screen_height = 80;
+	int x = 250;
+	int y = 20;
+	int vy = 2;
+	int vx = 10;
+	int gridSize = 10;
+	int r = 0;
+	int c = 5;
 
-	JLabel squareBlock;
+	gridCell[][] grid = new gridCell[80][50];
 
 	public void paint(Graphics g) {
-		super.paintComponent(g);
+		super.paintComponents(g);
 
-		// square.paint(g);
+		for (int r = 0; r < grid.length; r++) {
+			for (int c = 0; c < grid[0].length; c++) {
+				grid[r][c].paint(g);
+			}
+		}
 	}
 
-	public void moveCycle(){
-		square.move();
-		if (square.getIsMoving() == false) {
-			TBlock.move();
+	public void update(){
+		try
+		{
+		    Thread.sleep(1000);
 		}
-		if (TBlock.getIsMoving() == false) {
-			SBlock.move();
+		catch(InterruptedException ex)
+		{
+		    Thread.currentThread().interrupt();
+		}		
+		if(r < grid.length) {
+			grid[r][c].setC(Color.BLACK);
+			r++;
+			grid[r][c].setC(Color.CYAN);
+			
 		}
-		if (SBlock.getIsMoving() == false) {
-			LBlock.move();
-		}
-		if (LBlock.getIsMoving() == false) {
-			Rectangle.move();
-		}
-	}
-	public void update() {
-		moveCycle();
+		/*y += vy;
+		if (y > screen_height - 75) {
+			vy = 0;
+			vx = 0;
+		}*/
 	}
 
 	@Override
@@ -59,33 +70,32 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 
 	public static void main(String[] arg) {
 		Driver d = new Driver();
+
 	}
 
 	public Driver() {
 		JFrame f = new JFrame();
-		f.setTitle("TETRIS");
+		f.setTitle("Tetris");
+		// f.setBackground(Color.BLACK);
 		f.setSize(screen_width, screen_height);
-		f.getContentPane().setBackground(new Color(0, 0, 0));
-
-		String src = new File("").getAbsolutePath() + "/src/"; // path to image
-																// setup
-
-		f.add(square.getImg());
-		f.add(Rectangle.getImg());
-		f.add(TBlock.getImg());
-		f.add(SBlock.getImg());
-		f.add(LBlock.getImg());
-
-		f.setResizable(false);
-		f.setLayout(null);
 		f.addKeyListener(this);
 		f.add(this);
+		// initialize Grid
+		for (int r = 0; r < grid.length; r++) {
+			for (int c = 0; c < grid[0].length; c++) {
+
+				grid[r][c] = new gridCell();
+				grid[r][c].set(c * 10, r * 10, 10, Color.BLACK);
+
+			}
+		}
 
 		// end creating objects
-		t = new Timer(17, this);
+		t = new Timer(20, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
+
 	}
 
 	Timer t;
@@ -93,13 +103,21 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		// System.out.println(e.getKeyCode());
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println(e.getKeyCode());
+		if (e.getKeyCode() == 39 && y < screen_height - 75 && x < screen_width - 50) {
+			x += vx;
 
+		}
+		if (e.getKeyCode() == 37 && y < screen_height - 75 && x > 0) {
+			x -= vx;
+
+		}
 	}
 
 	@Override
