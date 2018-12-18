@@ -55,12 +55,12 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 		 */
 
 		if (block.move(grid) == false) {
+			block.setType((int) (Math.random() * (2 - 1 + 1) + 1));
 			block = new Block(grid);
-
-			if (block.getGameOver() == true) {
-				System.exit(0);
-			}
 		}
+		/*
+		 * if (block.getGameOver() == true) { System.exit(0); }
+		 */
 	}
 
 	@Override
@@ -129,5 +129,4 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 
 	}
-
 }
