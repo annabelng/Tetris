@@ -29,7 +29,9 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-
+		g.setColor(new Color(255, 255, 255));
+		g.drawRect(20, 20, 30, 40);
+		
 		// square.paint(g);
 	}
 
@@ -148,12 +150,13 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 					TBlock.setY(TBlock.getY());
 				}
 			}
-		reset();
+		//reset();
 
 	}
 
 	public void update() {
 		moveCycle();
+		
 		//reset();
 		//moveCycle();
 	}
@@ -166,6 +169,7 @@ public class Driver extends JPanel implements KeyListener, ActionListener {
 
 	public static void main(String[] arg) {
 		Driver d = new Driver();
+		
 	}
 
 	JFrame f = new JFrame();;
