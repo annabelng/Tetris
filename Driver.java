@@ -26,43 +26,46 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 	int vx = 10;
 	int gridSize = 10;
 	int r = 0;
-	int c = 5;
+	int c = 23;
 
-	gridCell[][] grid = new gridCell[80][50];
-	Block blocks = new Block(0);
+	/* public static */gridCell[][] grid = new gridCell[80][50];
+	Block block;
+
 	public void paint(Graphics g) {
 		super.paintComponents(g);
-		
-		blocks.paint(g);
-	//	g.fillRect(blocks.getX(), 300, 50, 50);
-//		for (int r = 0; r < grid.length; r++) {
-//			for (int c = 0; c < grid[0].length; c++) {
-//				grid[r][c].paint(g);
-//				grid[blocks.getR()][blocks.getColumn()].setC(Color.BLUE);
-//				grid[blocks.getR()][blocks.getColumn()].paintBlock(g);
-//			}
-//		}
+
+		for (int r = 0; r < grid.length; r++) {
+			for (int c = 0; c < grid[0].length; c++) {
+				grid[r][c].paint(g);
+				if (grid[r][c].getC() != Color.BLACK) {
+					System.out.println("row:" + r);
+					System.out.println("col:" + c);
+				}
+				// grid[blocks.getR()][blocks.getColumn()].setC(Color.CYAN);
+				// blocks.paint(g);
+			}
+		}
+
 	}
 
-	public void update(){
-		
-//		int newR = blocks.getR();
-//		
-//			grid[newR][blocks.getColumn()].setC(Color.BLACK);
-//			newR++;
-//			grid[newR][blocks.getColumn()].setC(Color.BLUE);
-//			
-			blocks.move();
-		
-		/*y += vy;
-		if (y > screen_height - 75) {
-			vy = 0;
-			vx = 0;
-		}*/
+	public void update() {
+		/*
+		 * try { Thread.sleep(1000); } catch(InterruptedException ex) {
+		 * Thread.currentThread().interrupt(); }
+		 */
+
+		if (block.move(grid) == false) {
+			block = new Block(grid);
+
+			if (block.getGameOver() == true) {
+				System.exit(0);
+			}
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+
 		update();
 		repaint();
 	}
@@ -81,16 +84,16 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 		f.setResizable(false);
 		f.addKeyListener(this);
 		f.add(this);
+
 		// initialize Grid
 		for (int r = 0; r < grid.length; r++) {
 			for (int c = 0; c < grid[0].length; c++) {
 
 				grid[r][c] = new gridCell();
 				grid[r][c].set(c * 10, r * 10, 10, Color.BLACK);
-
 			}
 		}
-
+		block = new Block(grid);
 		// end creating objects
 		t = new Timer(60, this);
 		t.start();
@@ -111,12 +114,12 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println(e.getKeyCode());
-		if (e.getKeyCode() == 39 && y < screen_height - 75 && x < screen_width - 50) {
-			x += vx;
+		if (e.getKeyCode() == 39) {
+			block.moveRight();
 
 		}
-		if (e.getKeyCode() == 37 && y < screen_height - 75 && x > 0) {
-			x -= vx;
+		if (e.getKeyCode() == 37) {
+			block.moveLeft();
 
 		}
 	}

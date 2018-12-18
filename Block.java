@@ -2,81 +2,160 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Block {
-	private int x, y;
+
 	private int r;
-	private int column;
-	private Color c;
-	private int length, width;
+	private int c;
 	private Color color;
-	int vy = 10;
+
 	private int[] type;
 	private int size;
 	private int n = 0;
+	private boolean canMove;
+	private boolean gameOver;
+	private boolean moveRight;
+	private boolean moveLeft;
 
-	public Block(int n) {
+	public Block(gridCell[][] grid) {
+		// square
+		this.r = 0;
+		this.c = 25;
+		this.gameOver = false;
+		this.moveRight = false;
+		this.moveLeft = false;
 
-//		type = new int[5];
-//		size = 10;
-//		for (int i = 0; i < type.length; i++) {
-//			type[i] = i;
-//		}
-//		n = (int) (Math.random() * (4));
+		if ((grid[r][c].getC() != Color.BLACK) || (grid[r][c + 1].getC() != Color.BLACK)
+				|| (grid[r + 1][c].getC() != Color.BLACK) || (grid[r + 1][c + 1].getC() != Color.BLACK)) {
+			this.gameOver = true;
+		}
 
-		// square block
-		//if (type[n] == 0) {
-			r = 0;
-			column = 25;
-			y = r * 10;
-			x = column * 10;
-			color = Color.CYAN;
-			length = 20;
-			size = 10;
+		this.color = Color.CYAN;
 
-	//	}
+		grid[r][c].setC(color);
+		grid[r][c + 1].setC(color);
+		grid[r + 1][c].setC(color);
+		grid[r + 1][c + 1].setC(color);
+
 	}
 
 	public int getR() {
-		return r;
-	}
-	public Color getC() {
-		return c;
-	}
-	public int getX() {
-		return x;
-	}
-	public int getY() {
-		return y;
-	}
-	public int getColumn() {
-		return column;
+		return this.r;
 	}
 
-	public void move(){
-		y+=vy;
+	public int getC() {
+		return this.c;
 	}
 
-	public void paint(Graphics g) {
+	public boolean moveRight() {
+		this.moveRight = true;
+		return this.moveRight;
+	}
+
+	public boolean moveLeft() {
+		this.moveLeft = true;
+		return this.moveLeft;
+	}
+
+	public boolean move(gridCell[][] grid) {
+		// move right
+		if (this.moveRight == true) {
+			this.color = Color.BLACK;
+
+			grid[r][c].setC(color);
+			grid[r][c + 1].setC(color);
+			grid[r + 1][c].setC(color);
+			grid[r + 1][c + 1].setC(color);
+
+			this.c++;
+
+			this.color = Color.CYAN;
+
+			grid[r][c].setC(color);
+			grid[r][c + 1].setC(color);
+			grid[r + 1][c].setC(color);
+			grid[r + 1][c + 1].setC(color);
+			this.moveRight = false;
+
+		} else if (this.moveLeft == true) {
+			this.color = Color.BLACK;
+
+			grid[r][c].setC(color);
+			grid[r][c + 1].setC(color);
+			grid[r + 1][c].setC(color);
+			grid[r + 1][c + 1].setC(color);
+
+			this.c--;
+
+			this.color = Color.CYAN;
+
+			grid[r][c].setC(color);
+			grid[r][c + 1].setC(color);
+			grid[r + 1][c].setC(color);
+			grid[r + 1][c + 1].setC(color);
+			this.moveLeft = false;
+		} else {
+			// downward movement
+
+			// checking the bottom boundary
+			if (r + 1 == grid.length - 3) {
+				canMove = false;
+				System.out.println("Bool:" + canMove);
+
+				// checking for other blocks below
+			} else if ((grid[r + 2][c].getC() != Color.BLACK) || (grid[r + 2][c + 1].getC() != Color.BLACK)) {
+				canMove = false;
+				System.out.println("Bool:" + canMove);
+
+				// clear to move down
+			} else if (this.r + 1 < grid.length - 3) {
+				this.canMove = true;
+				// downward movement
+				this.color = Color.BLACK;
+
+				grid[r][c].setC(color);
+				grid[r][c + 1].setC(color);
+				grid[r + 1][c].setC(color);
+				grid[r + 1][c + 1].setC(color);
+
+				this.r++;
+				System.out.println("Bool:" + canMove);
+
+				this.color = Color.CYAN;
+
+				grid[r][c].setC(color);
+				grid[r][c + 1].setC(color);
+				grid[r + 1][c].setC(color);
+				grid[r + 1][c + 1].setC(color);
+
+			} else if (this.r + 1 == grid.length - 3) {
+
+				this.canMove = false;
+				System.out.println("Bool:" + canMove);
+			}
+		}
+
+		/*
+		 * System.out.println("row:" + r); System.out.println("col:" + c);
+		 */
+		return canMove;
+	}
+
+	public boolean getCanMove() {
 		// TODO Auto-generated method stub
-	//	System.out.println(12);
-		g.setColor(Color.blue);
-		g.fillRect(x, y, size, size);
-//		g.fillRect(x + 10, y, size, size);
-//		g.fillRect(x, y + 10, size, size);
-//		g.fillRect(x + 10, y + 10, size, size);
+		return canMove;
 	}
 
-	public void set(int newX, int newY, int newSize, Color newC) {
-		x = newX;
-		y = newY;
-		size = newSize;
-		c = newC;
-
-	}
-	// g.setColor(color);
-	// g.fillRect(x, y, size, size);
-
-	public void setC(Color newC) {
+	public boolean getGameOver() {
 		// TODO Auto-generated method stub
-		c = newC;
+		return gameOver;
 	}
 }
+
+/*
+ * public void set(int newX, int newY, int newSize, Color newC) { x = newX; y =
+ * newY; size = newSize; c = newC;
+ * 
+ * } // g.setColor(color); // g.fillRect(x, y, size, size);
+ * 
+ * public void setC(Color newC) { // TODO Auto-generated method stub c = newC; }
+ * }
+ */
