@@ -1,5 +1,6 @@
 import java.applet.Applet;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 // Class driver 
 public class Driver extends JPanel implements ActionListener, KeyListener {
 
-	int screen_width = 500;
+	int screen_width = 300;
 	int screen_height = 800;
 	int x = 250;
 	int y = 20;
@@ -27,40 +28,38 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 	int gridSize = 10;
 	int r = 0;
 	int c = 23;
-
-	/* public static */gridCell[][] grid = new gridCell[80][50];
+	int score = 0;
+	int sum = 0;
+	/* public static */
+	gameGrid grid = new gameGrid(80, 30);
 	Block block;
+	// gameGrid game = new gameGrid(80,50);
+	
 
 	public void paint(Graphics g) {
 		super.paintComponents(g);
 
-		for (int r = 0; r < grid.length; r++) {
-			for (int c = 0; c < grid[0].length; c++) {
-				grid[r][c].paint(g);
-				if (grid[r][c].getC() != Color.BLACK) {
-					System.out.println("row:" + r);
-					System.out.println("col:" + c);
-				}
-				// grid[blocks.getR()][blocks.getColumn()].setC(Color.CYAN);
-				// blocks.paint(g);
-			}
-		}
+		grid.paint(g);
+
+		g.setColor(Color.WHITE);
+
+		g.setFont(new Font("Helvetica", Font.BOLD, 40));
+		String stringScore = Integer.toString(score);
+		g.drawString(stringScore, 200, 100);
 
 	}
 
 	public void update() {
-		/*
-		 * try { Thread.sleep(1000); } catch(InterruptedException ex) {
-		 * Thread.currentThread().interrupt(); }
-		 */
+		int n;
 
 		if (block.move(grid) == false) {
 			block.setType((int) (Math.random() * (2 - 1 + 1) + 1));
 			block = new Block(grid);
+			
+			n = grid.fullrow();
+			score = score + n*10;
+			System.out.println(n);
 		}
-		/*
-		 * if (block.getGameOver() == true) { System.exit(0); }
-		 */
 	}
 
 	@Override
@@ -78,21 +77,13 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 	public Driver() {
 		JFrame f = new JFrame();
 		f.setTitle("Tetris");
-		// f.setBackground(Color.BLACK);
 		f.setSize(screen_width, screen_height);
 		f.getContentPane();
 		f.setResizable(false);
 		f.addKeyListener(this);
 		f.add(this);
 
-		// initialize Grid
-		for (int r = 0; r < grid.length; r++) {
-			for (int c = 0; c < grid[0].length; c++) {
-
-				grid[r][c] = new gridCell();
-				grid[r][c].set(c * 10, r * 10, 10, Color.BLACK);
-			}
-		}
+		// game.game(80, 50, grid);
 		block = new Block(grid);
 		// end creating objects
 		t = new Timer(60, this);
