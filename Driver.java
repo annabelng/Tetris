@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
 import java.util.concurrent.TimeUnit;
 
 // Class driver 
@@ -46,7 +45,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 
 		g.setFont(new Font("Helvetica", Font.BOLD, 40));
 		String stringScore = Integer.toString(score);
-		g.drawString(stringScore, 200, 100);
+		g.drawString(stringScore, 275, 100);
 
 	}
 
@@ -54,7 +53,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 		int n;
 
 		if (block.move(grid) == false) {
-			block.setType((int)(Math.random()*(3-1+1)+1));
+			block.setType((int) (Math.random() * (2 - 1 + 1) + 1));
 			block = new Block(grid);
 			
 			n = grid.fullrow();

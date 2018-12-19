@@ -10,7 +10,7 @@ public class Block {
 	private int size;
 	private int n = 0;
 
-	private int type = (int)(Math.random()*(3-1+1)+1);
+	private int type = (int) (Math.random() * (2 - 1 + 1) + 1);
 
 	private boolean canMove;
 	private boolean gameOver;
@@ -23,7 +23,7 @@ public class Block {
 		// square
 		if (type == 1) {
 			this.r = 10;
-			this.c = 24;
+			this.c = 15;
 			this.gameOver = false;
 			this.moveRight = false;
 			this.moveLeft = false;
@@ -42,7 +42,7 @@ public class Block {
 		}
 		if (type == 2) {
 			this.r = 10;
-			this.c = 25;
+			this.c = 15;
 			this.gameOver = false;
 			this.moveRight = false;
 			this.moveLeft = false;
@@ -55,23 +55,6 @@ public class Block {
 			grid[r][c + 3].setC(color);
 			;
 
-		}
-		
-		//S-Block
-		
-		if(type == 3){
-			this.r = 10;
-			this.c = 25;
-			this.gameOver = false;
-			this.moveRight = false;
-			this.moveLeft = false;
-			
-			this.color = Color.green;
-			
-			grid[r][c].setC(color);
-			grid[r][c + 1].setC(color);
-			grid[r + 1][c - 1].setC(color);
-			grid[r + 1][c].setC(color);
 		}
 	}
 
@@ -87,7 +70,7 @@ public class Block {
 
 	public boolean move(gameGrid game) {
 		// move right
-		//square =============================================================================================================================================
+		//square
 		gridCell[][] grid = game.getGrid();
 		
 		
@@ -194,7 +177,7 @@ public class Block {
 		 * grid[grid.length - 1][c].setC(Color.BLACK); } }
 		 */
 
-		//rectangle type=====================================================================================================================================
+		//rectangle type
 		if (type == 2) {
 			if (this.moveRight == true) {
 			
@@ -287,127 +270,6 @@ public class Block {
 				}*/
 			}
 		}
-		
-		
-		
-		//S-Block================================================================================================================================================
-		
-			
-		
-		
-		if (type == 3) {
-			if (this.moveRight == true) {
-				
-				if (this.c + 2 == grid[0].length) {
-					this.moveRight = false;
-					System.out.println("Bool:" + moveRight);
-
-				} else {
-					this.color = Color.BLACK;
-
-					grid[r][c].setC(color);
-					grid[r][c + 1].setC(color);
-					grid[r + 1][c - 1].setC(color);
-					grid[r + 1][c].setC(color);
-
-					this.c++;
-
-					this.color = Color.green;
-
-					grid[r][c].setC(color);
-					grid[r][c + 1].setC(color);
-					grid[r + 1][c - 1].setC(color);
-					grid[r + 1][c].setC(color);
-					this.moveRight = false;
-				}
-
-				// leftward movement
-			} else if (this.moveLeft == true) {
-
-				// checking left wall
-				if (this.c == 0) {
-					this.moveLeft = false;
-					System.out.println("Bool:" + moveLeft);
-
-					// if no collision w wall, continue to move down
-				} else {
-					this.color = Color.BLACK;
-
-					grid[r][c].setC(color);
-					grid[r][c + 1].setC(color);
-					grid[r + 1][c - 1].setC(color);
-					grid[r + 1][c].setC(color);
-
-					// moving column left
-					this.c--;
-
-					this.color = Color.green;
-
-					grid[r][c].setC(color);
-					grid[r][c + 1].setC(color);
-					grid[r + 1][c - 1].setC(color);
-					grid[r + 1][c].setC(color);
-					this.moveLeft = false;
-				}
-
-			} else {
-				// downward movement
-
-				// checking the bottom boundary
-				if (r + 1 == grid.length - 3) {
-					canMove = false;
-					System.out.println("Bool:" + canMove);
-
-					// checking for other blocks below
-				} else if ((grid[r + 1][c+1].getC() != Color.BLACK)
-						|| (grid[r + 2][c].getC() != Color.BLACK)
-						|| (grid[r + 2][c-1].getC() != Color.BLACK)) {
-					canMove = false;
-					System.out.println("Bool:" + canMove);
-
-					// clear to move down
-				} else if (this.r + 1 < grid.length - 3) {
-					this.canMove = true;
-					// downward movement
-					this.color = Color.BLACK;
-
-					grid[r][c].setC(color);
-					grid[r][c + 1].setC(color);
-					grid[r + 1][c - 1].setC(color);
-					grid[r + 1][c].setC(color);
-
-					this.r++;
-					System.out.println("Bool:" + canMove);
-
-					this.color = Color.green;
-
-					grid[r][c].setC(color);
-					grid[r][c + 1].setC(color);
-					grid[r + 1][c - 1].setC(color);
-					grid[r + 1][c].setC(color);
-
-				} /*else if (this.r + 1 == grid.length - 4) {
-					this.canMove = false;
-					System.out.println("Bool:" + canMove);
-				}*/
-			}
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		/*
