@@ -23,34 +23,26 @@ public class gameGrid {
 
 	public int fullrow() {
 		int n = 0;
-		int r2 = 0;
 		boolean blackRow;
+		
 		for (int r = 0; r < gGrid.length; r++) {
 			int c = 0;
 
 			full = true;
-
 			while (full && c < gGrid[r].length) {
 				if (gGrid[r][c].getC() == Color.BLACK) {
 					full = false;
-
 				} else {
 					c++;
-
 				}
-
 			}
+			
 			if (full == true) {
 				n++;
 				for (c = 0; c < gGrid[r].length; c++) {
-					gGrid[r][c].setC(Color.BLACK);
-
-					for (r2 = r; r2 > 0; r2--) {
-						
+					for (int r2 = r; r2 >15; r2--) {
 								gGrid[r2][c].setC(gGrid[r2 - 1][c].getC());
 								gGrid[r2 - 1][c].setC(Color.BLACK);
-							
-						
 					}
 				}
 			}
@@ -70,6 +62,15 @@ public class gameGrid {
 			for (int c = 0; c < gGrid[0].length; c++) {
 
 				gGrid[r][c].paint(g);
+			}
+		}
+	}
+	
+	public void paintOver(Graphics g) {
+		for (int r = 0; r < gGrid.length; r++) {
+			for (int c = 0; c < gGrid[0].length; c++) {
+
+				gGrid[r][c].paintOver(g);
 			}
 		}
 	}

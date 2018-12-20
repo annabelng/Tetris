@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 // Class driver 
 public class Driver extends JPanel implements ActionListener, KeyListener {
 
-	int screen_width = 600;
+	int screen_width = 400;
 	int screen_height = 800;
 	int x = 250;
 	int y = 20;
@@ -31,21 +31,20 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 	int score = 0;
 	int sum = 0;
 	/* public static */
-	gameGrid grid = new gameGrid(40, 30);
+	gameGrid grid = new gameGrid(40, 20);
 	Block block;
 	// gameGrid game = new gameGrid(80,50);
-	
 
 	public void paint(Graphics g) {
 		super.paintComponents(g);
+	
+			grid.paint(g);
 
-		grid.paint(g);
-
-		g.setColor(Color.WHITE);
-
-		g.setFont(new Font("Helvetica", Font.BOLD, 40));
-		String stringScore = Integer.toString(score);
-		g.drawString(stringScore, 275, 100);
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Helvetica", Font.BOLD, 40));
+			String stringScore = Integer.toString(score);
+			g.drawString(stringScore, screen_width / 2, 100);
+		
 
 	}
 
@@ -53,14 +52,23 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 		int n;
 
 		if (block.move(grid) == false) {
-			block.setType((int) (Math.random() * (2 - 1 + 1) + 1));
+			block.setType((int) (Math.random() * (3 - 1 + 1) + 1));
 			block = new Block(grid);
-			
+
 			n = grid.fullrow();
-			score = score + n*10;
+			score = score + n * 10;
 			System.out.println(n);
+
 		}
-	}
+	//if (block.getGameOver() == true) {
+			
+			//grid.paintOver(g);
+			//g.setColor(Color.RED);
+			//g.setFont(new Font("Helvetica", Font.BOLD, 50));
+			//g.drawString("GAME OVER", screen_width / 2, screen_height / 2);
+			//System.exit(0);
+		}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

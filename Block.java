@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class Block {
@@ -10,24 +11,26 @@ public class Block {
 	private int size;
 	private int n = 0;
 
-	private int type = (int) (Math.random() * (2 - 1 + 1) + 1);
+	private int type = (int) (Math.random() * (3 - 1 + 1) + 1);
 
 	private boolean canMove;
 	private boolean gameOver;
 	private boolean moveRight;
 	private boolean moveLeft;
-
+	private boolean haveMoved;
+	
 	public Block(gameGrid game) {
 		gridCell[][] grid = game.getGrid();
 
 		// square
 		if (type == 1) {
-			this.r = 10;
-			this.c = 15;
+			this.r = 5;
+			this.c = 10;
 			this.gameOver = false;
 			this.moveRight = false;
 			this.moveLeft = false;
-
+			this.haveMoved = false;
+			
 			/*
 			 * if ((grid[r][c].getC() != Color.BLACK) || (grid[r][c + 1].getC() !=
 			 * Color.BLACK) || (grid[r + 1][c].getC() != Color.BLACK) || (grid[r + 1][c +
@@ -40,12 +43,14 @@ public class Block {
 			grid[r + 1][c].setC(color);
 			grid[r + 1][c + 1].setC(color);
 		}
+		// rectangle
 		if (type == 2) {
-			this.r = 10;
-			this.c = 15;
+			this.r = 5;
+			this.c = 10;
 			this.gameOver = false;
 			this.moveRight = false;
 			this.moveLeft = false;
+			this.haveMoved = false;
 
 			this.color = Color.red;
 
@@ -53,9 +58,25 @@ public class Block {
 			grid[r][c + 1].setC(color);
 			grid[r][c + 2].setC(color);
 			grid[r][c + 3].setC(color);
-			;
 
 		}
+		// s-block
+		if (type == 3) {
+			this.r = 5;
+			this.c = 10;
+			this.gameOver = false;
+			this.moveRight = false;
+			this.moveLeft = false;
+			this.haveMoved = false;
+			
+			this.color = Color.green;
+
+			grid[r][c].setC(color);
+			grid[r][c + 1].setC(color);
+			grid[r + 1][c - 1].setC(color);
+			grid[r + 1][c].setC(color);
+		}
+
 	}
 
 	public boolean moveRight() {
@@ -70,17 +91,17 @@ public class Block {
 
 	public boolean move(gameGrid game) {
 		// move right
-		//square
+		// square=================================================
 		gridCell[][] grid = game.getGrid();
-		
-		
+
 		if (type == 1) {
+			
 			if (this.moveRight == true) {
-				
+
 				if (this.c + 2 == grid[0].length) {
 					this.moveRight = false;
 					System.out.println("Bool:" + moveRight);
-
+				
 				} else {
 					this.color = Color.BLACK;
 
@@ -134,18 +155,22 @@ public class Block {
 
 				// checking the bottom boundary
 				if (r + 1 == grid.length - 3) {
-					canMove = false;
+					this.canMove = false;
 					System.out.println("Bool:" + canMove);
 
 					// checking for other blocks below
-				} else if ((grid[r + 2][c].getC() != Color.BLACK)
-						|| (grid[r + 2][c + 1].getC() != Color.BLACK)) {
-					canMove = false;
+				} else if ((grid[r + 2][c].getC() != Color.BLACK) || (grid[r + 2][c + 1].getC() != Color.BLACK)) {
+					this.canMove = false;
 					System.out.println("Bool:" + canMove);
+					
+					if(this.haveMoved == false) {
+						System.exit(0);
+					}
 
 					// clear to move down
 				} else if (this.r + 1 < grid.length - 3) {
 					this.canMove = true;
+					this.haveMoved = true;
 					// downward movement
 					this.color = Color.BLACK;
 
@@ -164,87 +189,82 @@ public class Block {
 					grid[r + 1][c].setC(color);
 					grid[r + 1][c + 1].setC(color);
 
-				} /*else if (this.r + 1 == grid.length - 4) {
-					this.canMove = false;
-					System.out.println("Bool:" + canMove);
-				}*/
+				}
 			}
 		}
-		/*
-		 * for (int c = 0; c < grid[0].length; c++) {
-		 * 
-		 * if (grid[grid.length - 1][c].getC() != Color.BLACK) {
-		 * grid[grid.length - 1][c].setC(Color.BLACK); } }
-		 */
 
-		//rectangle type
+		// rectangle type=======================================================
+
 		if (type == 2) {
 			if (this.moveRight == true) {
-			
-					if (this.c + 4 == grid[0].length) {
-						this.moveRight = false;
-						System.out.println("Bool:" + moveRight);
-					} else {
-						this.color = Color.BLACK;
-						grid[r][c].setC(color);
-						grid[r][c + 1].setC(color);
-						grid[r][c + 2].setC(color);
-						grid[r][c + 3].setC(color);
 
-						c++;
+				if (this.c + 4 == grid[0].length) {
+					this.moveRight = false;
+					System.out.println("Bool:" + moveRight);
+				} else {
+					this.color = Color.BLACK;
+					grid[r][c].setC(color);
+					grid[r][c + 1].setC(color);
+					grid[r][c + 2].setC(color);
+					grid[r][c + 3].setC(color);
 
-						this.color = Color.red;
-						grid[r][c].setC(color);
-						grid[r][c + 1].setC(color);
-						grid[r][c + 2].setC(color);
-						grid[r][c + 3].setC(color);
-						this.moveRight = false;
-					}
-					
+					c++;
+
+					this.color = Color.red;
+					grid[r][c].setC(color);
+					grid[r][c + 1].setC(color);
+					grid[r][c + 2].setC(color);
+					grid[r][c + 3].setC(color);
+					this.moveRight = false;
+				}
+
 			} else if (this.moveLeft == true) {
 
-					// checking left wall
-					if (this.c == 0) {
+				// checking left wall
+				if (this.c == 0) {
 					this.moveLeft = false;
 					System.out.println("Left" + moveLeft);
-					
-					} else {
-						this.color = Color.BLACK;							
-						grid[r][c].setC(color);
-						grid[r][c + 1].setC(color);
-						grid[r][c + 2].setC(color);
-						grid[r][c + 3].setC(color);
-						
-						// moving column left
-						this.c--;
 
-						this.color = Color.red;
-						
-						grid[r][c].setC(color);
-						grid[r][c + 1].setC(color);
-						grid[r][c + 2].setC(color);
-						grid[r][c + 3].setC(color);
-						this.moveLeft = false;
+				} else {
+					this.color = Color.BLACK;
+					grid[r][c].setC(color);
+					grid[r][c + 1].setC(color);
+					grid[r][c + 2].setC(color);
+					grid[r][c + 3].setC(color);
+
+					// moving column left
+					this.c--;
+
+					this.color = Color.red;
+
+					grid[r][c].setC(color);
+					grid[r][c + 1].setC(color);
+					grid[r][c + 2].setC(color);
+					grid[r][c + 3].setC(color);
+					this.moveLeft = false;
 				}
-				
+
 			} else {
 				// downward movement
 				// checking the bottom boundary
-				if (this.r+1 == grid.length-2) {
-					
+				if (this.r + 1 == grid.length - 2) {
+
 					this.canMove = false;
 					System.out.println("Bool:" + canMove);
 
-				} else if ((grid[r + 1][c].getC() != Color.BLACK)
-						|| (grid[r + 1][c + 1].getC() != Color.BLACK)
-						|| (grid[r + 1][c + 2].getC() != Color.BLACK)
-						|| (grid[r + 1][c + 3].getC() != Color.BLACK)) {
-					
-					canMove = false;
-					System.out.println("Bool:" + canMove);
+				} else if ((grid[r + 1][c].getC() != Color.BLACK) || (grid[r + 1][c + 1].getC() != Color.BLACK)
+						|| (grid[r + 1][c + 2].getC() != Color.BLACK) || (grid[r + 1][c + 3].getC() != Color.BLACK)) {
 
-				} else if (this.r + 1 < grid.length-2) {
+					this.canMove = false;
+					System.out.println("Bool:" + canMove);
+					
+					if(this.haveMoved == false) {
+						System.exit(0);
+					}
+
+				} else if (this.r + 1 < grid.length - 2) {
 					this.canMove = true;
+					this.haveMoved = true;
 					// downward movement
 					this.color = Color.BLACK;
 
@@ -264,14 +284,117 @@ public class Block {
 					grid[r][c + 2].setC(color);
 					grid[r][c + 3].setC(color);
 
-				} /*else if (this.r + 1 == grid.length - 4) {
-					this.canMove = false;
-					System.out.println("Bool:" + canMove);
-				}*/
+				}
 			}
 		}
+			//s-block ==========================================================
+			
+			
+			if (type == 3) {
+				if (this.moveRight == true) {
+	
+					if (this.c + 2 == grid[0].length) {
+						this.moveRight = false;
+						System.out.println("Bool:" + moveRight);
+	
+					} else {
+						this.color = Color.BLACK;
+	
+						grid[r][c].setC(color);
+						grid[r][c + 1].setC(color);
+						grid[r + 1][c - 1].setC(color);
+						grid[r + 1][c].setC(color);
+	
+						this.c++;
+	
+						this.color = Color.green;
+	
+						grid[r][c].setC(color);
+						grid[r][c + 1].setC(color);
+						grid[r + 1][c - 1].setC(color);
+						grid[r + 1][c].setC(color);
+						this.moveRight = false;
+					}
+	
+					// leftward movement
+				} else if (this.moveLeft == true) {
+	
+					// checking left wall
+					if (this.c-1 == 0) {
+						this.moveLeft = false;
+						System.out.println("Bool:" + moveLeft);
+	
+						// if no collision w wall, continue to move down
+					} else {
+						this.color = Color.BLACK;
+	
+						grid[r][c].setC(color);
+						grid[r][c + 1].setC(color);
+						grid[r + 1][c - 1].setC(color);
+						grid[r + 1][c].setC(color);
+	
+						// moving column left
+						this.c--;
+	
+						this.color = Color.green;
+	
+						grid[r][c].setC(color);
+						grid[r][c + 1].setC(color);
+						grid[r + 1][c - 1].setC(color);
+						grid[r + 1][c].setC(color);
+						this.moveLeft = false;
+					}
+	
+				} else {
+					// downward movement
+	
+					// checking the bottom boundary
+					if (r + 1 == grid.length - 3) {
+						this.canMove = false;
+						System.out.println("Bool:" + canMove);
+	
+						// checking for other blocks below
+					} else if ((grid[r + 1][c+1].getC() != Color.BLACK)
+							|| (grid[r + 2][c].getC() != Color.BLACK)
+							|| (grid[r + 2][c-1].getC() != Color.BLACK)) {
+						this.canMove = false;
+						System.out.println("Bool:" + canMove);
+						
+						if(this.haveMoved == false) {
+							System.exit(0);
+						}
+						// clear to move down
+					} else if (this.r + 1 < grid.length - 3) {
+						this.canMove = true;
+						this.haveMoved = true;
+						// downward movement
+						this.color = Color.BLACK;
+	
+						grid[r][c].setC(color);
+						grid[r][c + 1].setC(color);
+						grid[r + 1][c - 1].setC(color);
+						grid[r + 1][c].setC(color);
+	
+						this.r++;
+						System.out.println("Bool:" + canMove);
+	
+						this.color = Color.green;
+	
+						grid[r][c].setC(color);
+						grid[r][c + 1].setC(color);
+						grid[r + 1][c - 1].setC(color);
+						grid[r + 1][c].setC(color);
+	
+					} 
+				}
+			}
+		/*if(canMove == false && grid[r][c].getR() == 5) {
+			System.exit(1000);
+		}*/
 		
-		
+			
+	    // Check if this block can't even make one move
+	
 		/*
 		 * System.out.println("row:" + r); System.out.println("col:" + c);
 		 */
@@ -300,15 +423,11 @@ public class Block {
 		// TODO Auto-generated method stub
 		type = newType;
 	}
+	public void gameOver(Graphics g) {
+		// TODO Auto-generated method stub
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Helvetica", Font.BOLD, 80));
+		g.drawString("GAME OVER", 150, 300);
+	}
 
 }
-
-/*
- * public void set(int newX, int newY, int newSize, Color newC) { x = newX; y =
- * newY; size = newSize; c = newC;
- * 
- * } // g.setColor(color); // g.fillRect(x, y, size, size);
- * 
- * public void setC(Color newC) { // TODO Auto-generated method stub c = newC; }
- * }
- */
