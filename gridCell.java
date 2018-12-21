@@ -6,8 +6,8 @@ public class gridCell {
 	private int size;
 	private Color c;
 
-
 	public gridCell() {
+		//initializing everything
 		x = 0;
 		y = 0;
 		size = 0;
@@ -23,10 +23,12 @@ public class gridCell {
 
 	}
 
+	//mainly setters and getters
 	public void setX(int NEWX) {
 		x = NEWX;
 	}
 
+	//very important function that helps to draw the blocks
 	public void setC(Color NEWC) {
 		c = NEWC;
 	}
@@ -34,7 +36,6 @@ public class gridCell {
 	public int getX() {
 		return x;
 	}
-
 	
 	public Color getC() {
 		return c;
@@ -48,13 +49,12 @@ public class gridCell {
 		return size;
 	}
 
+	//painting the grid cells
 	public void paint(Graphics g) {
 		
+		//getting the color and setting it
 		g.setColor(c);
 		g.fillRect(x, y, size, size);
-	}
-	public void paintOver(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(x, y, size, size);
+		
 	}
 }

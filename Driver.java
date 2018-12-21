@@ -19,26 +19,30 @@ import java.util.concurrent.TimeUnit;
 // Class driver 
 public class Driver extends JPanel implements ActionListener, KeyListener {
 
+	// variables for screen
 	int screen_width = 400;
 	int screen_height = 800;
-	int x = 250;
-	int y = 20;
-	int vy = 2;
-	int vx = 10;
-	int gridSize = 10;
-	int r = 0;
-	int c = 23;
-	int score = 0;
-	int sum = 0;
 
+	int score = 0;
+
+	// creating objects
+
+	// main grid for the game - the 2D array is initialized in the class
 	gameGrid grid = new gameGrid(40, 20);
+
+	// block object, can be all shapes
 	Block block;
 
+	// painting the grid and blocks
 	public void paint(Graphics g) {
 		super.paintComponents(g);
 
+		// painting grid - blocks are in the grid
+		// gameGrid is passed into block class so blocks are directly painted in there
 		grid.paint(g);
 
+		// drawing the score
+		// updating over and over by being called in actionPerformed
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Helvetica", Font.BOLD, 40));
 		String stringScore = Integer.toString(score);
@@ -47,13 +51,23 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void update() {
+		// setting n for number of rows cleared
 		int n;
 
+		// if block can't move anymore
 		if (block.move(grid) == false) {
+
+			// randomize type number for random shape
 			block.setType((int) (Math.random() * (3 - 1 + 1) + 1));
+			// create new block object
 			block = new Block(grid);
 
+			// n is set to the number of rows cleared
+			// returned from full row method in gameGrid class
 			n = grid.fullrow();
+
+			// update score according to n
+			// each cleared row = 10 pts
 			score = score + n * 10;
 			System.out.println(n);
 
@@ -62,17 +76,19 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-
+		// update cycle
 		update();
 		repaint();
 	}
 
+	// driver class
 	public static void main(String[] arg) {
 		Driver d = new Driver();
 
 	}
 
 	public Driver() {
+		// setting up JFrame
 		JFrame f = new JFrame();
 		f.setTitle("Tetris");
 		f.setSize(screen_width, screen_height);
@@ -81,6 +97,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 		f.addKeyListener(this);
 		f.add(this);
 
+		// creating initial block
 		block = new Block(grid);
 
 		// end creating objects
@@ -95,7 +112,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// System.out.println(e.getKeyCode());
+
 	}
 
 	@Override
