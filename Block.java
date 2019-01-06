@@ -21,7 +21,7 @@ public class Block {
 
 	// constructor w the overall game grid passed in as argument
 	public Block(gameGrid game) {
-		
+
 		// declaring array and returning the initialized array
 		// from the game grid class
 		gridCell[][] grid = game.getGrid();
@@ -111,10 +111,14 @@ public class Block {
 					// testing the moveRight function
 					System.out.println("Right:" + moveRight);
 
-					// if no collision with right wall, block continues
-					// to move right
+					// checks for collision with block on right
+				} else if (grid[r][this.c + 2].getC() != Color.BLACK || grid[r + 1][this.c + 2].getC() != Color.BLACK) {
+					this.moveRight = false;
+
+				// if no collision with right wall or block, block continues
+				// to move right
 				} else {
-					//clearing initial block
+					// clearing initial block
 					this.color = Color.BLACK;
 
 					grid[r][c].setC(color);
@@ -122,10 +126,10 @@ public class Block {
 					grid[r + 1][c].setC(color);
 					grid[r + 1][c + 1].setC(color);
 
-					//adds one to column to move right
+					// adds one to column to move right
 					this.c++;
 
-					//resets the location and color
+					// resets the location and color
 					this.color = Color.CYAN;
 
 					grid[r][c].setC(color);
@@ -135,7 +139,7 @@ public class Block {
 					this.moveRight = false;
 				}
 
-			// leftward movement
+				// leftward movement
 			} else if (this.moveLeft == true) {
 
 				// checking left wall
@@ -143,9 +147,12 @@ public class Block {
 					this.moveLeft = false;
 					System.out.println("Left:" + moveLeft);
 
-				// if no collision w wall, block continues to move left
+				}else if(grid[r][this.c-1].getC()!=Color.BLACK||grid[r+1][this.c-1].getC()!=Color.BLACK){
+					this.moveLeft = false;
+					
+				// if no collision w wall or block, block continues to move left
 				} else {
-					//clearing block
+					// clearing block
 					this.color = Color.BLACK;
 
 					grid[r][c].setC(color);
@@ -156,7 +163,7 @@ public class Block {
 					// subtracting one from column to move left
 					this.c--;
 
-					//resetting the block's location and color
+					// resetting the block's location and color
 					this.color = Color.CYAN;
 
 					grid[r][c].setC(color);
@@ -167,47 +174,47 @@ public class Block {
 				}
 
 			} else {
-				
+
 				// downward movement
-				
+
 				// checking the bottom boundary
 				if (r + 1 == grid.length - 3) {
 					this.canMove = false;
-					//another tester print statement
+					// another tester print statement
 					System.out.println("canMove:" + canMove);
 
-				// checking for other blocks
-				//checks the blocks immediately below the block
+					// checking for other blocks
+					// checks the blocks immediately below the block
 				} else if ((grid[r + 2][c].getC() != Color.BLACK) || (grid[r + 2][c + 1].getC() != Color.BLACK)) {
 					this.canMove = false;
 					System.out.println("canMove:" + canMove);
-					
-					//once block has moved at least one row down
-					//this flag is switched off
-					//so if it's still false, that mean the blocks are up to the top
+
+					// once block has moved at least one row down
+					// this flag is switched off
+					// so if it's still false, that mean the blocks are up to the top
 					if (this.haveMoved == false) {
 						System.exit(0);
 					}
 
-				// block is clear to move down
+					// block is clear to move down
 				} else if (this.r + 1 < grid.length - 3) {
 					this.canMove = true;
 					this.haveMoved = true;
-					
+
 					// downward movement
-					//clears block
+					// clears block
 					this.color = Color.BLACK;
 
 					grid[r][c].setC(color);
 					grid[r][c + 1].setC(color);
 					grid[r + 1][c].setC(color);
 					grid[r + 1][c + 1].setC(color);
-					
-					//adds one to row to move the entire block down
+
+					// adds one to row to move the entire block down
 					this.r++;
 					System.out.println("Bool:" + canMove);
 
-					//resets block location and color
+					// resets block location and color
 					this.color = Color.CYAN;
 
 					grid[r][c].setC(color);
@@ -220,29 +227,32 @@ public class Block {
 		}
 
 		// rectangle type=======================================================
-		
-		//checking for rectangle type
+
+		// checking for rectangle type
 		if (type == 2) {
-			
+
 			if (this.moveRight == true) {
-				//right wall check changes depending on block
+				// right wall check changes depending on block
 				if (this.c + 4 == grid[0].length) {
 					this.moveRight = false;
 					System.out.println("Right:" + moveRight);
-					
-				//if not hitting the wall, continue to move right
+
+				} else if (grid[r][this.c + 4].getC() != Color.BLACK) {
+					this.moveRight = false;
+
+					// if not hitting the wall, continue to move right
 				} else {
-					//resetting block
+					// resetting block
 					this.color = Color.BLACK;
 					grid[r][c].setC(color);
 					grid[r][c + 1].setC(color);
 					grid[r][c + 2].setC(color);
 					grid[r][c + 3].setC(color);
-					
-					//adding one to column to move right
+
+					// adding one to column to move right
 					c++;
 
-					//resetting location and color
+					// resetting location and color
 					this.color = Color.red;
 					grid[r][c].setC(color);
 					grid[r][c + 1].setC(color);
@@ -250,7 +260,7 @@ public class Block {
 					grid[r][c + 3].setC(color);
 					this.moveRight = false;
 				}
-			//checking for leftward movement
+				// checking for leftward movement
 			} else if (this.moveLeft == true) {
 
 				// checking left wall
@@ -258,9 +268,12 @@ public class Block {
 					this.moveLeft = false;
 					System.out.println("Left" + moveLeft);
 
-				//if not hitting wall continue to move left
-				} else {
+				}else if(grid[r][this.c-1].getC()!=Color.BLACK){
+					this.moveLeft = false;
 					
+				// if not hitting wall or block continue to move left
+				} else {
+
 					this.color = Color.BLACK;
 					grid[r][c].setC(color);
 					grid[r][c + 1].setC(color);
@@ -286,21 +299,21 @@ public class Block {
 
 					this.canMove = false;
 					System.out.println("canMove:" + canMove);
-				
-					//checking if block is hitting another block
-					//checking the cells directly below the block
+
+					// checking if block is hitting another block
+					// checking the cells directly below the block
 				} else if ((grid[r + 1][c].getC() != Color.BLACK) || (grid[r + 1][c + 1].getC() != Color.BLACK)
 						|| (grid[r + 1][c + 2].getC() != Color.BLACK) || (grid[r + 1][c + 3].getC() != Color.BLACK)) {
 
 					this.canMove = false;
 					System.out.println("canMove:" + canMove);
 
-					//game over
+					// game over
 					if (this.haveMoved == false) {
 						System.exit(0);
 					}
 
-				//if everything is clear, move down
+					// if everything is clear, move down
 				} else if (this.r + 1 < grid.length - 2) {
 					this.canMove = true;
 					this.haveMoved = true;
@@ -328,14 +341,17 @@ public class Block {
 		}
 		// s-block ==========================================================
 
-		//same structure as previous move cycles, only thing
-		//that changes is the shape of block and location of checks
+		// same structure as previous move cycles, only thing
+		// that changes is the shape of block and location of checks
 		if (type == 3) {
 			if (this.moveRight == true) {
 
 				if (this.c + 2 == grid[0].length) {
 					this.moveRight = false;
 					System.out.println("Right:" + moveRight);
+
+				} else if (grid[r][this.c + 2].getC() != Color.BLACK || grid[r + 1][this.c + 1].getC() != Color.BLACK) {
+					this.moveRight = false;
 
 				} else {
 					this.color = Color.BLACK;
@@ -364,7 +380,10 @@ public class Block {
 					this.moveLeft = false;
 					System.out.println("Left:" + moveLeft);
 
-					// if no collision w wall, continue to move down
+				}else if(grid[r][this.c-1].getC()!=Color.BLACK||grid[r+1][this.c-2].getC()!=Color.BLACK){
+					this.moveLeft = false;
+					
+				// if no collision w wall, continue to move down
 				} else {
 					this.color = Color.BLACK;
 
@@ -427,8 +446,8 @@ public class Block {
 				}
 			}
 		}
-		//returns the canMove boolean so 
-		//program knows when to create the new block
+		// returns the canMove boolean so
+		// program knows when to create the new block
 		return canMove;
 	}
 

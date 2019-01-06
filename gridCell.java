@@ -22,6 +22,14 @@ public class gridCell {
 		c = newC;
 
 	}
+	//painting the grid cells
+	public void paint(Graphics g) {
+		
+		//getting the color and setting it
+		g.setColor(c);
+		g.fillRect(x, y, size, size);
+		
+	}
 
 	//mainly setters and getters
 	public void setX(int NEWX) {
@@ -49,12 +57,4 @@ public class gridCell {
 		return size;
 	}
 
-	//painting the grid cells
-	public void paint(Graphics g) {
-		
-		//getting the color and setting it
-		g.setColor(c);
-		g.fillRect(x, y, size, size);
-		
-	}
 }
